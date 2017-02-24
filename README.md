@@ -1,8 +1,6 @@
 # SudokuAI
 Python Sudoku Framework for a backtracking AI
 
-A formated version of this text can be found in PythonReadMe.docx
-
 CS 171 Sudoku Project Shell: Python Edition
 -------------------------------------------
 
