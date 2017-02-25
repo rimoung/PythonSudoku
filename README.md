@@ -82,6 +82,6 @@ You may notice the use of a trail in BTSolver. The trail is an important part of
 
 In order to set the heuristics based on the tokens passed as arguments, you can read `btsolver.py` and `main.py` to see the functions that can be utilized in order to solve this task.
 
-You may notice some text files located in the directory. The `example.txt` is an example of a generated board. The `example_result.txt` is an example of how the output files will look like.
+You may notice some text files located in the `ExampleSudokuFiles` directory. These `P*.txt` are examples of generated boards. The `example_result.txt` is an example of how the output files will look like.
 
 There are two files called `file_reader.py` and `filewriter.py` that are used to read from files and write the results to a file. You should not need to modify these files but you can look at them in case you are curious.
