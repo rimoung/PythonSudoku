@@ -65,7 +65,7 @@ These are the files you will be working with in this project:
 The main file you will be modifying is the btsolver.py. This file implements that constraint satisfaction problem solvers you have studied in class and is an implementation of the pseudocode for Recursive Bactracking on page 142 in chapter 5 of the Russell-Norvig book.
 
 
-#### TO DO For BTSolver
+#### TODO For BTSolver
 In order to improve upon the backtracking search, we can introduce heuristics and consistency checks. Having heuristics allows us to speed up our search by only checking promising assignments first. Meanwhile, consistency checks significantly prune the search space, reducing the number of potential assignments to check.
 
 Variable Selection Heuristics
@@ -75,6 +75,8 @@ Value Selection Heuristics
   - Least Constraining Value: Select value which is involved with least conflicts with neighboring domains
 Consistency Checks:
   - Forward Checking: If you assign a variable X, if another variable Y is involved in a constraint with X, you prune the domain of Y with any inconsistent values Arc Consistency: For every pair of variables participating in constraints with each other, every value in one variable's domain must be satisfiable by at least one value in the other variable's domain.
+  - Naked Pairs: In progress...
+  - Naked Triples: In progress...
 
 #### Trial
 You may notice the use of a trail in BTSolver. The trail is an important part of BTSolver as it is needed in order to enable backtracking. Whenever a variable is modified, a copy of the old value of the variable will be put onto the trail. When undo is called, changes made after the latest marker are undone, and the last marker is popped.
