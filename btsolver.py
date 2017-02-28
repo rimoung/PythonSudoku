@@ -18,10 +18,10 @@ you can also manually set the heuristics in the main.py file when reading the pa
 as the primary heuristics to use and then break ties within the functions you implement
 It follows similarly to the other heuristics and chekcs
 '''
-VariableSelectionHeuristic = {'None': 0, 'MRV': 1, 'Degree': 2}
-#ValueSelectionHeuristic = {'None': 0, 'LeastConstrainingValue': 1}
+VariableSelectionHeuristic = {'None': 0, 'MRV': 1, 'DH': 2}
 ValueSelectionHeuristic = {'None': 0, 'LCV': 1}
-ConsistencyCheck = {'None': 0, 'ForwardChecking': 1, 'ArcConsistency': 2, 'NKT':3}
+ConsistencyCheck = {'None': 0, 'ForwardChecking': 1, 'ArcConsistency': 2}
+HeuristicCheck = {'None': 0, 'NKP': 1, 'NKT': 2}
 
 
 class BTSolver:
@@ -44,6 +44,7 @@ class BTSolver:
         self.varHeuristics = 0  # refers to which variable selection heuristic in use(0 means default, 1 means MRV, 2 means DEGREE)
         self.valHeuristics = 0  # refers to which value selection heuristic in use(0 means default, 1 means LCV)
         self.cChecks = 0  # refers to which consistency check will be run(0 for backtracking, 1 for forward checking, 2 for arc consistency)
+        self.heuristicChecks = 0
         # self.runCheckOnce = False
         self.tokens = []  # tokens(heuristics to use)
 
@@ -66,6 +67,10 @@ class BTSolver:
         '''modify the consistency check'''
         self.cChecks = cc
 
+    def setHeuristicChecks(self, hc):
+        '''modify the heurisic check (naked pairs and triples)'''
+        self.heuristicChecks += hc
+
     ######### Accessors Method #########
     def getSolution(self):
         return self.gameboard
@@ -83,10 +88,18 @@ class BTSolver:
             return self.forwardChecking()
         elif self.cChecks == 2:
             return self.arcConsistency()
-        elif self.cChecks == 3:
-	    return self.nakedTriple()
         else:
             return self.assignmentsCheck()
+
+    def checkHeuristics(self):
+        if self.heuristicChecks == 1:
+            return self.nakedPairs()
+        elif self.heuristicChecks == 2:
+            return self.nakedTriples()
+        elif self.heuristicChecks == 3:
+            return self.nakedPairs() and self.nakedTriples()
+        else:
+            return True    
 
     def assignmentsCheck(self):
         """
@@ -100,17 +113,22 @@ class BTSolver:
                         return False
         return True
 
-    def nakedTriple(self):
+    def nakedPairs(self):
         """
-         Implement nakedTriple.
-         can uncomment comments for verbose progress reports
+           TODO: Implement naked pairs heuristic.
         """
         pass
 
+    def nakedTriples(self):
+        """
+           TODO:  Implement naked triples heuristic.
+        """
+        pass 
+
+
     def forwardChecking(self):
         """
-             Implement forward checking.
-         can uncomment comments for verbose progress reports
+           TODO:  Implement forward checking.
         """
         pass
 
@@ -118,7 +136,7 @@ class BTSolver:
         """
             TODO: Implement Maintaining Arc Consistency.
         """
-        pass
+        return False
 
     def selectNextVariable(self):
         """
@@ -149,14 +167,15 @@ class BTSolver:
             TODO: Implement MRV heuristic
             @return variable with minimum remaining values that isn't assigned, null if all variables are assigned.
         """
-        pass  
+        pass 
 
     def getDegree(self):
         """
             TODO: Implement Degree heuristic
             @return variable constrained by the most unassigned variables, null if all variables are assigned.
         """
-        pass
+        pass 
+      
 
     def getNextValues(self, v):
         """
@@ -250,7 +269,7 @@ class BTSolver:
             self.numAssignments += 1
 
             # move to the next assignment
-            if self.checkConsistency():
+            if self.checkConsistency() and self.checkHeuristics():
                 self.solveLevel(level + 1)
 
             # if this assignment failed at any stage, backtrack
